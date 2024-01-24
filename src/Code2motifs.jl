@@ -2,6 +2,7 @@ module Code2motifs
 
 # Write your package code here.
 using DataStructures, CUDA, FLoops, StaticArrays, StatsBase, Dictionaries
+using HypothesisTests, Mustache, DataFrames
 
 include("inference/_0_const.jl")
 include("inference/_1_code_retrieval.jl")
@@ -23,5 +24,19 @@ include("inference/_h7_fisher.jl")
 include("inference/_h8_remove_redundancy.jl")
 include("inference/_h9_order_for_display.jl")
 include("inference/_g1_obtain_coutmats.jl")
+
+include("render/const.jl")
+include("render/helpers.jl")
+include("render/html_template_olap.jl")
+include("render/html_template_no_olap.jl")
+include("render/plotting.jl")
+include("render/pvec_calculations.jl")
+include("render/render.jl")
+
+function render_motif_discovery_results(target_folder, 
+        stored_code_components, data, hp, bg; alpha_fisher=1e-5)
+    ms = run_thru(stored_code_components, data, hp, bg)
+    render_result!(target_folder, ms, data, bg; alpha_fisher = alpha_fisher)   
+end
 
 end
