@@ -89,12 +89,12 @@ end
 function gpu_scan(ms, data; bg=false, test=false)
     found_record, score_record = 
         get_pos_scores_arr(ms, data; rc=false, bg=bg, test=test);
-    found_record_rc, score_record_rc = 
-        get_pos_scores_arr(ms, data; rc=true, bg=bg, test=test);
+    # found_record_rc, score_record_rc = 
+    #     get_pos_scores_arr(ms, data; rc=true, bg=bg, test=test);
     
     positions, scores, use_comp = motifs_prep(ms);
     modify_w_found!(found_record, score_record, positions, scores, use_comp; rc=false)
-    modify_w_found!(found_record_rc, score_record_rc, positions, scores, use_comp; rc=true)
+    # modify_w_found!(found_record_rc, score_record_rc, positions, scores, use_comp; rc=true)
     return positions, scores, use_comp
 end
 

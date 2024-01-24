@@ -70,15 +70,15 @@ function this_cmat_pair_of_different_len_has_high_allr(cmat1, cmat2, i, j, bg; m
             diff_end   = larger_mat_size - (i+numcol_smaller_mat-1)            
             break
         end
-        allr_c = avg_allr(smaller_mat_r, view(larger_mat, :,i:i+numcol_smaller_mat-1), bg)
-        if allr_c > allr_thresh
-            comp_match = true
-            diff_front = larger_mat_size - (i+numcol_smaller_mat-1)
-            diff_end   = i-1
-            break
-        end
+        # allr_c = avg_allr(smaller_mat_r, view(larger_mat, :,i:i+numcol_smaller_mat-1), bg)
+        # if allr_c > allr_thresh
+        #     comp_match = true
+        #     diff_front = larger_mat_size - (i+numcol_smaller_mat-1)
+        #     diff_end   = i-1
+        #     break
+        # end
     end
-    return diff_front, diff_end, smaller_ind, larger_ind, larger_mat,  comp_match
+    return diff_front, diff_end, smaller_ind, larger_ind, larger_mat, comp_match
 end
 
 function alignment_merge!(ms, data, bg; allr_thresh=allr_thresh)

@@ -24,12 +24,4 @@ include("inference/_h8_remove_redundancy.jl")
 include("inference/_h9_order_for_display.jl")
 include("inference/_g1_obtain_coutmats.jl")
 
-include("render/const.jl")
-include("render/helpers.jl")
-include("render/html_template_olap.jl")
-include("render/html_template_no_olap.jl")
-include("render/plotting.jl")
-include("render/pvec_calculations.jl")
-include("render/render.jl")
-
 end

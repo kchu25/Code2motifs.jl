@@ -10,7 +10,6 @@ Couple things:
 5. Get the start and end range for each syntax filter
 =#
 
-
 get_magnitude(x) = x.mag
 
 get_fils(cartesian_inds_sorted, i,j,k) = 

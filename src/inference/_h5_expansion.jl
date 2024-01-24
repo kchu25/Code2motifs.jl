@@ -158,7 +158,7 @@ function edit_posdict_i!(expand__left, expand__right,
         end
         ms.positions[i][k] = ms.positions[i][k][indices_to_keep]
         ms.use_comp[i][k]  = ms.use_comp[i][k][indices_to_keep]
-        # TODO scores as well?
+
     end    
 end
 

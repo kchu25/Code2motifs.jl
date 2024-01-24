@@ -105,11 +105,9 @@ end
 
 get_backup_enriched_keys(H_base, data, hp, this_bg) = merge_trim_merge_H_w_enriched_keys(data, hp, H_base, this_bg)
 
-
-function run_thru(data, cdl, hp, len, projs, this_bg)
+function run_thru(stored_code_component, data, hp, this_bg)
 
     @info "Retrieving the non-zero code components..."
-    stored_code_component       = code_retrieval(data, cdl, hp, len, projs)
     H_base = get_H_base(stored_code_component, hp)
 
     H_w_enriched_keys_mtm_p05   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.05, get_how_many=1000)
@@ -150,38 +148,3 @@ function run_thru(data, cdl, hp, len, projs, this_bg)
     return countmats2motifs(new_cmats, this_bg);
 end
 
-
-function run_thru2(data, cdl, hp, len, projs, this_bg)
-
-    @info "Retrieving the non-zero code components..."
-    stored_code_component       = code_retrieval(data, cdl, hp, len, projs)
-    H_base = get_H_base(stored_code_component, hp)
-
-    H_w_enriched_keys_mtm_p25   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.25, get_how_many=1000)
-    H_w_enriched_keys_mtm_p35   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.35, get_how_many=1000)
-    H_w_enriched_keys_mtm_p45   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.45, get_how_many=1000)
-    H_w_enriched_keys_mtm_p5    = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.5,  get_how_many=1000)
-    H_w_enriched_keys_mtm_p65   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.65, get_how_many=1000)
-    H_w_enriched_keys_mtm_p75   = get_H_w_enriched_keys_mtm_quantile(stored_code_component, data, this_bg, hp; quantile=0.75, get_how_many=1000)
-
-    H_w_enriched_keys_mtm = merge(H_w_enriched_keys_mtm_p75, H_w_enriched_keys_mtm_p65)
-    H_w_enriched_keys_mtm = merge(H_w_enriched_keys_mtm, H_w_enriched_keys_mtm_p5)
-    H_w_enriched_keys_mtm = merge(H_w_enriched_keys_mtm, H_w_enriched_keys_mtm_p45)
-    H_w_enriched_keys_mtm = merge(H_w_enriched_keys_mtm, H_w_enriched_keys_mtm_p35)
-    H_w_enriched_keys_mtm = merge(H_w_enriched_keys_mtm, H_w_enriched_keys_mtm_p25)
-
-    for k in keys(H_w_enriched_keys_mtm)        
-        if haskey(H_base, k)
-            H_w_enriched_keys_mtm[k] = union(H_w_enriched_keys_mtm[k], H_base[k])
-        else
-            H_w_enriched_keys_mtm[k] = union(H_w_enriched_keys_mtm[k])
-        end
-    end
-    
-    length(H_w_enriched_keys_mtm) == 0 && (H_w_enriched_keys_mtm = get_backup_enriched_keys(H_base, data, hp, this_bg))
-    length(H_w_enriched_keys_mtm) == 0 && return nothing
-
-    ms = enriched_keys2motifs(H_w_enriched_keys_mtm, data, this_bg);
-    # expansions_ms!(ms, data, this_bg);
-    return ms
-end
